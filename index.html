@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mugiwara Reveal</title>
+    <link rel="stylesheet" href=".//ready html/css/style.css">
+    <link rel="stylesheet" href=".//ready html/css/normalize.css">
+</head>
+
+<body>
+
+    <div class="wrapp">
+        <div class="fixed-top">
+            <h2 class="title">Made by <br><span class="color">mugiwara</span></h2>
+        </div>
+
+        <div class="fixed-top">
+            <div class="fixed-footer__wrapp">
+                <div class="fixed-footer__txt">
+                    <div class="fixed-footer__img"><img src="./ready html/img/mug1.png" alt=""></div>mugiwara<br> code
+                </div>
+                <div class="fixed-footer__txt"><span class="color"></span></div>
+            </div>
+        </div>
+         
+        <section class="section">
+            <div class="section__wrapp">
+
+
+                <div class="section__item">
+                    <div class="section__bl">
+                        <div class="section__img">
+                            <img src="./ready html/img/1.jpg" alt="">
+                        </div>
+                        <div class="section__num">[01]</div>
+                        <div class="section__txt">
+                            <h2 class="section__title"><span>Radahn</span><br>Consort</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="section__item">
+                    <div class="section__bl">
+                        <div class="section__img">
+                            <img src="./ready html/img/2.jpg" alt="">
+                        </div>
+                        <div class="section__num">[02]</div>
+                        <div class="section__txt">
+                            <h2 class="section__title"><span>Miquella</span><br>the Kind</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="section__item">
+                    <div class="section__bl">
+                        <div class="section__img">
+                            <img src="./ready html/img/3.jpg" alt="">
+                        </div>
+                        <div class="section__num">[03]</div>
+                        <div class="section__txt">
+                            <h2 class="section__title"><span>Malenia</span><br>Blade of Miquella</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="section__item">
+                    <div class="section__bl">
+                        <div class="section__img">
+                            <img src="./ready html/img/4.jpg" alt="">
+                        </div>
+                        <div class="section__num">[04]</div>
+                        <div class="section__txt">
+                            <h2 class="section__title"><span>Mohg</span><br>Lord of Blood</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="section__item">
+                    <div class="section__bl">
+                        <div class="section__img">
+                            <img src="./ready html/img/5.jpg" alt="">
+                        </div>
+                        <div class="section__num">[05]</div>
+                        <div class="section__txt">
+                            <h2 class="section__title"><span>Godfrey</span><br>First Elden Lord</h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+
+
+
+</body>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+	<script>
+
+		document.addEventListener("DOMContentLoaded", function () {
+
+			'use strict';
+
+
+			// lemis
+			const lenis = new Lenis();
+			lenis.on('scroll', ScrollTrigger.update)
+			gsap.ticker.add((time) => {
+				lenis.raf(time * 1200)
+			});
+			gsap.ticker.lagSmoothing(0);
+
+			// gsap animation
+			gsap.registerPlugin(ScrollTrigger);
+
+			const gsapItem = gsap.utils.toArray('.section__bl');
+
+			gsapItem.forEach((gsIt) => {
+
+				const scImg = gsIt.querySelectorAll('.section__img-bl');
+				const scTxt = gsIt.querySelectorAll('.section__txt');
+				const scTitle = gsIt.querySelector('.section__title');
+
+				// parallax img
+				gsap.to(scImg, {
+					y: "var(--gsimparallax)",
+					ease: 'none',
+					scrollTrigger: {
+						trigger: gsIt,
+						start: "top bottom",
+						end: 'bottom top',
+						scrub: 2
+					}
+				});
+
+				//reveal title
+				gsap.set(scTitle, {
+					attr: {
+						style: "-webkit-mask-image: linear-gradient(to right, #000 0%, transparent 0%); mask-image: linear-gradient(to right, #000 0%, transparent 0%);will-change: mask-image, -webkit-mask-image;"
+					}
+				});
+
+				let tl = gsap.timeline({
+					scrollTrigger: {
+						trigger: gsIt,
+						start: "20% center",
+						end: "bottom 30%",
+						toggleActions: "play nene play none"
+					}
+				});
+
+				tl.fromTo(scTitle, {
+					attr: {
+						style: "-webkit-mask-image: linear-gradient(to right, #000 0%, transparent 0%); mask-image: linear-gradient(to right, #000 0%, transparent 0%);will-change: mask-image, -webkit-mask-image;"
+					}
+				}, {
+					attr: {
+						style: "-webkit-mask-image: linear-gradient(to right, #000 100%, transparent 200%); mask-image: linear-gradient(to right, #000 100%, transparent 200%);will-change: mask-image, -webkit-mask-image;"
+					},
+					duration: 5,
+					ease: "power4.out"
+				});
+
+				// parallax txt
+				gsap.to(scTxt, {
+					y: -100,
+					ease: 'none',
+					scrollTrigger: {
+						trigger: gsIt,
+						start: "5% center",
+						end: 'bottom top',
+						scrub: 3
+					}
+				});
+
+			});
+
+		});
+
+	</script>
+
+</html>
